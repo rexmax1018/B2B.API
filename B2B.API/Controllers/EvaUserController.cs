@@ -1,4 +1,5 @@
-﻿using B2B.Dao.Models;
+﻿using B2B.API.Attributes;
+using B2B.Dao.Models;
 using B2B.Service.Interfacies;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,6 +7,7 @@ namespace B2B.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [ApiLog]
     public class EvaUserController : ControllerBase
     {
         private IEvaUserService _euService;
