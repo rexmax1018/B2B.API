@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using B2B.Dao.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using B2B.Dao.Models;
 
 namespace B2B.Dao.Contexts
 {
@@ -18,15 +15,6 @@ namespace B2B.Dao.Contexts
         }
 
         public virtual DbSet<Twb2bSysmenu> Twb2bSysmenus { get; set; } = null!;
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseOracle("Data Source=10.18.1.162:1521/EVA;User ID=REX;Password=rex#1018");
-            }
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
