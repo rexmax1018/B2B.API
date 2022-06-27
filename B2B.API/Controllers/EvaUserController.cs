@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace B2B.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class EvaUserController : ControllerBase
     {
