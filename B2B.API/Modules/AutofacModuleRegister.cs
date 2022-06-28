@@ -13,7 +13,7 @@ namespace B2B.API.Modules
             builder.RegisterType<JwtHelper>().SingleInstance();
 
             // Register Entity Framework
-            var dbContextOptionsBuilder = new DbContextOptionsBuilder<B2BDbContext>().UseOracle("Data Source=10.18.1.162:1521/EVA;User ID=REX;Password=rex#1018");
+            var dbContextOptionsBuilder = new DbContextOptionsBuilder<B2BDbContext>().UseOracle("Data Source=EVADB;User ID=REX;Password=rex#1018");
 
             builder.RegisterType<B2BDbContext>()
                    .WithParameter("options", dbContextOptionsBuilder.Options)

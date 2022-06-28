@@ -16,7 +16,8 @@
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:7211;http://localhost:5211",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "TNS_ADMIN": "D:\\Oracle\\app\\oracle\\product\\19.0.0\\client_1\\network\\admin"
       }
     },
     "IIS Express": {
