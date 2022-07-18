@@ -12,13 +12,13 @@ namespace B2B.API.Middlewares
     {
         private readonly RequestDelegate _next;
         private readonly RecyclableMemoryStreamManager _recyclableMemoryStreamManager;
-        private readonly ILogger _logger;
+        private readonly ILogger<ResponseLogMiddleware> _logger;
 
-        public ResponseLogMiddleware(RequestDelegate next, ILoggerFactory loggerFactory)
+        public ResponseLogMiddleware(RequestDelegate next, ILogger<ResponseLogMiddleware> logger)
         {
             _next = next;
             _recyclableMemoryStreamManager = new RecyclableMemoryStreamManager();
-            _logger = loggerFactory.CreateLogger<ResponseLogMiddleware>();
+            _logger = logger;
         }
 
         public async Task Invoke(HttpContext context)
@@ -43,15 +43,15 @@ namespace B2B.API.Middlewares
             {
                 // 須要紀錄 Log
 
-                _logger.LogInformation(
-                    $"LogId:{(string)context.Items["ApiLogId"]} " +
-                    $"Schema:{context.Request.Scheme} " +
-                    $"Host: {context.Request.Host.ToUriComponent()} " +
-                    $"Path: {context.Request.Path} " +
-                    $"QueryString: {context.Request.QueryString} " +
-                    $"ResponseHeader: {GetHeaders(context.Response.Headers)} " +
-                    $"ResponseBody: {responseBodyTxt}" +
-                    $"ResponseStatus: {context.Response.StatusCode}");
+                _logger.LogInformation("\n" +
+                    $"LogId:{(string)context.Items["ApiLogId"]} \n" +
+                    $"Schema:{context.Request.Scheme} \n" +
+                    $"Host: {context.Request.Host.ToUriComponent()} \n" +
+                    $"Path: {context.Request.Path} \n" +
+                    $"QueryString: {context.Request.QueryString} \n" +
+                    $"ResponseStatus: {context.Response.StatusCode}\n" +
+                    $"ResponseHeader: {GetHeaders(context.Response.Headers)} \n" +
+                    $"ResponseBody: {responseBodyTxt}\n");
             }
         }
 

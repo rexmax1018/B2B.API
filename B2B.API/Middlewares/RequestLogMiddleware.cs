@@ -12,13 +12,13 @@ namespace B2B.API.Middlewares
     {
         private readonly RequestDelegate _next;
         private readonly RecyclableMemoryStreamManager _recyclableMemoryStreamManager;
-        private readonly ILogger _logger;
+        private readonly ILogger<RequestLogMiddleware> _logger;
 
-        public RequestLogMiddleware(RequestDelegate next, ILoggerFactory loggerFactory)
+        public RequestLogMiddleware(RequestDelegate next, ILogger<RequestLogMiddleware> logger)
         {
             _next = next;
             _recyclableMemoryStreamManager = new RecyclableMemoryStreamManager();
-            _logger = loggerFactory.CreateLogger<RequestLogMiddleware>();
+            _logger = logger;
         }
 
         public async Task Invoke(HttpContext context)
@@ -44,14 +44,15 @@ namespace B2B.API.Middlewares
                 context.Items["ApiLogId"] = GetLogId();
 
                 // 保存 Log 資訊
-                _logger.LogInformation(
-                    $"LogId:{(string)context.Items["ApiLogId"]} " +
-                    $"Schema:{context.Request.Scheme} " +
-                    $"Host: {context.Request.Host.ToUriComponent()} " +
-                    $"Path: {context.Request.Path} " +
-                    $"QueryString: {context.Request.QueryString} " +
-                    $"RequestHeader: {GetHeaders(context.Request.Headers)} " +
-                    $"RequestBody: {ReadStreamInChunks(requestStream)}");
+                _logger.LogInformation("\n" +
+                    $"LogId:{(string)context.Items["ApiLogId"]} \n" +
+                    $"Romate IP Address: {context.Request.HttpContext.Connection.RemoteIpAddress} \n" +
+                    $"Schema:{context.Request.Scheme} \n" +
+                    $"Host: {context.Request.Host.ToUriComponent()} \n" +
+                    $"Path: {context.Request.Path} \n" +
+                    $"QueryString: {context.Request.QueryString} \n" +
+                    $"RequestHeader: {GetHeaders(context.Request.Headers)} \n" +
+                    $"RequestBody: {ReadStreamInChunks(requestStream)}\n");
 
                 context.Request.Body.Position = 0;
                 await _next(context);
